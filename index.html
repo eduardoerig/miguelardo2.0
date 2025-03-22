@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Miguelardo</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body class="body_login">
+
+  <main class="container_login">
+    <!-- Formulário de Login -->
+    <section id="loginForm" class="form-container-index active" aria-label="Formulário de Login">
+      <div class="image-container">
+        <img src="../imgs/logoBrancoRecortada.png" alt="Logo Miguelardo" />
+      </div>
+      <h2>Login</h2>
+      <form onsubmit="login(event)">
+        <input type="email" id="loginEmail" placeholder="Email" required aria-label="Email para login" />
+        <input type="password" id="loginPassword" placeholder="Senha" required aria-label="Senha para login" />
+        <button type="submit">Entrar</button>
+      </form>
+      <p class="toggle-link">
+        Não tem uma conta?
+        <a href="#" onclick="toggleForms()">Cadastre-se</a>
+      </p>
+    </section>
+
+    <!-- Formulário de Cadastro -->
+    <section id="signupForm" class="form-container-index" aria-label="Formulário de Cadastro">      <div class="image-container">
+        <img src="../imgs/logoBranco.png" alt="Logo Miguelardo" />
+      </div>
+      <h2>Cadastro</h2>
+      <form onsubmit="register(event)">
+        <input type="text" id="signupName" placeholder="Nome Completo" required aria-label="Nome completo" />
+        <input type="email" id="signupEmail" placeholder="Email" required aria-label="Email de cadastro" />
+        <input type="password" id="signupPassword" placeholder="Senha" required aria-label="Senha" />
+        <input type="password" id="signupConfirmPassword" placeholder="Confirme a Senha" required aria-label="Confirme a senha" />
+        <button type="submit">Cadastrar-se</button>
+      </form>
+      <p class="toggle-link">
+        Já tem uma conta?
+        <a href="#" onclick="toggleForms()">Faça login</a>
+      </p>
+    </section>
+  </main>
+
+  <script>
+    // Alterna entre as telas de Login e Cadastro
+    function toggleForms() {
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+
+      loginForm.classList.toggle('active');
+      signupForm.classList.toggle('active');
+    }
+
+    // Função para registrar o usuário
+    function register(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert("As senhas não coincidem!");
+        return;
+      }
+
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
+
+      alert("Cadastro realizado com sucesso!");
+      toggleForms();
+    }
+
+    // Função para logar o usuário
+    function login(event) {
+      event.preventDefault();
+
+      const loginEmail = document.getElementById('loginEmail').value;
+      const loginPassword = document.getElementById('loginPassword').value;
+
+      const storedEmail = localStorage.getItem('email');
+      const storedPassword = localStorage.getItem('password');
+
+      if (loginEmail === storedEmail && loginPassword === storedPassword) {
+        alert("Login realizado com sucesso!");
+        window.location.href = "/html/pagina_principal.html";
+      } else {
+        alert("Email ou senha incorretos!");
+      }
+    }
+  </script>
+
+</body>
+</html>
